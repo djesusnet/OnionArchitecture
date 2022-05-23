@@ -6,16 +6,17 @@ namespace OnionArchitecture.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerController : ControllerBase
+    public class CustomersController : ControllerBase
     {
         private readonly ICustomerService _customerService;
 
-        public CustomerController(ICustomerService customerService)
+        public CustomersController(ICustomerService customerService)
         {
             _customerService = customerService;
         }
 
-        [HttpGet(nameof(GetCustomer))]
+        [HttpGet]
+        [Route("/customer/{id}")]
         public IActionResult GetCustomer(int id)
         {
             var result = _customerService.GetCustomer(id);
@@ -26,7 +27,7 @@ namespace OnionArchitecture.Api.Controllers
             return BadRequest("No records found");
         }
 
-        [HttpGet(nameof(GetAllCustomer))]
+        [HttpGet]
         public IActionResult GetAllCustomer()
         {
             var result = _customerService.GetAllCustomers();
@@ -37,21 +38,24 @@ namespace OnionArchitecture.Api.Controllers
             return BadRequest("No records found");
         }
 
-        [HttpPost(nameof(InsertCustomer))]
+        [HttpPost]
+        [Route("/customer")]
         public IActionResult InsertCustomer(Customer customer)
         {
             _customerService.InsertCustomer(customer);
             return Ok("Data inserted");
         }
 
-        [HttpPut(nameof(UpdateCustomer))]
+        [HttpPut]
+        [Route("/customer")]
         public IActionResult UpdateCustomer(Customer customer)
         {
             _customerService.UpdateCustomer(customer);
             return Ok("Updation done");
         }
 
-        [HttpDelete(nameof(DeleteCustomer))]
+        [HttpDelete]
+        [Route("/customer")]
         public IActionResult DeleteCustomer(int Id)
         {
             _customerService.DeleteCustomer(Id);
